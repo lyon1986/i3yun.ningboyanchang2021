@@ -1,0 +1,15 @@
+{
+  "name": "ningbo_demo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@i3yun/viewer": "^2021.2.1",
+    "dat.gui": "^0.7.7"
+  }
+}
