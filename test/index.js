@@ -83,6 +83,7 @@ Sippreep.Initializer().then(() => {
             viewer.model.getExternalIdMapping((idMapping) => {
                 //获取所有对象
                 let allDbids = Object.values(idMapping);
+                //随机获取一个对象
                 let dbids = [helperFuncs.getRandomValue(allDbids)];
 
                 funsData.focusedDbids.push(...dbids);
@@ -146,7 +147,7 @@ Sippreep.Initializer().then(() => {
                 alert("已到集合结尾");
         }
     }
-    //应用辅助
+    //辅助工具
     let helperFuncs = {
         showGUI: () => {
             //GUI显示
