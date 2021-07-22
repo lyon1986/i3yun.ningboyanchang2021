@@ -106,24 +106,17 @@ Sippreep.Initializer().then(() => {
             //viewer.select(dbids);
         },
         "定位聚焦对象": () => {
-            if (!viewer.model) {
-                alert("请先切换场景");
+            if (funsData.focusedDbids.length == 0) {
+                alert("请先定位聚焦对象组");
                 return;
             }
-            viewer.model.getExternalIdMapping((idMapping) => {
-                //获取所有对象
-                let allDbids = Object.values(idMapping);
-                //随机获取一个对象
-                let dbids = [helperFuncs.getRandomValue(allDbids)];
-
-                funsData.focusedDbids = dbids;
-                //隔离对象
-                viewer.isolate(funsData.focusedDbids);
-                //聚焦视角
-                viewer.fitToView(dbids);
-                //选中对象
-                //viewer.select(dbids);
-            });
+            //随机获取一个对象
+            let dbids = [helperFuncs.getRandomValue(funsData.focusedDbids)];
+            
+            //聚焦视角
+            viewer.fitToView(dbids);
+            //选中对象
+            //viewer.select(dbids);
         },
         "定位聚焦清除": () => {
             funsData.focusedDbids = [];
