@@ -18,7 +18,7 @@ Sippreep.Initializer().then(() => {
             , 'http://api.aisanwei.cn/api/Storge/Viewable?ID=jobs/dc6803f8-6871-4adf-98b6-4a508f5aa6ba/output/main.hf'//模型2
         ],
         //当前模型索引
-        modelUrlIndex: 0,
+        modelUrlIndex: -1,
         //定位聚焦对象集合
         focusedDbids: [],
         //颜色集合
@@ -27,16 +27,16 @@ Sippreep.Initializer().then(() => {
             , new THREE.Vector4(0, 0, 1, 1)//蓝
         ],
         //当前颜色索引
-        colorIndex: 0,
+        colorIndex: -1,
         //视角集合
         viewStates: [],
         //当前视角索引
-        viewStateIndex: 0,
+        viewStateIndex: -1,
     }
     //应用功能
     let funcs = {
         "切换场景": () => {
-            funsData.modelUrlIndex = helperFuncs.getSafeIndex(funsData.modelUrlIndex, funsData.modelUrls);
+            funsData.modelUrlIndex = helperFuncs.getNextIndex(funsData.modelUrlIndex, funsData.modelUrls);
 
             //清除旧模型
             if (viewer.model)
@@ -47,8 +47,6 @@ Sippreep.Initializer().then(() => {
             }, (e) => {
                 alert("加载模型失败");
             });
-
-            funsData.modelUrlIndex++;
         },
         "选中事件订阅": () => {
             if (!funcs.onSelectionChanged) {
@@ -114,11 +112,10 @@ Sippreep.Initializer().then(() => {
                 return;
             }
 
-            funsData.colorIndex = helperFuncs.getSafeIndex(funsData.colorIndex, funsData.colors);
+            funsData.colorIndex = helperFuncs.getNextIndex(funsData.colorIndex, funsData.colors);
             funsData.focusedDbids.forEach(dbid => {
                 viewer.setThemingColor(dbid, funsData.colors[funsData.colorIndex]);
             });
-            funsData.colorIndex++;
 
             viewer.fitToView(funsData.focusedDbids);
         },
@@ -139,12 +136,12 @@ Sippreep.Initializer().then(() => {
                 alert("请先添加视角");
                 return;
             }
-            funsData.viewStateIndex = helperFuncs.getSafeIndex(funsData.viewStateIndex, funsData.viewStates);
-            viewer.restoreState(funsData.viewStates[funsData.viewStateIndex]);
-            funsData.viewStateIndex++;
 
-            if (funsData.viewStateIndex + 1 == funsData.viewStates.length)
-                alert("已到集合结尾");
+            funsData.viewStateIndex = helperFuncs.getNextIndex(funsData.viewStateIndex, funsData.viewStates);
+            viewer.restoreState(funsData.viewStates[funsData.viewStateIndex]);
+
+            // if (funsData.viewStateIndex == funsData.viewStates.length-1)
+            //     alert("已到集合结尾");
         }
     }
     //辅助工具
@@ -159,12 +156,14 @@ Sippreep.Initializer().then(() => {
                 allGui.add(funcs, name);
             }
         },
-        getSafeIndex: (index, array) => {
-            if (index >= array.length) {
+        getNextIndex:(index, array) => {
+            let i = index;
+            i++;
+            if (i >= array.length) {
                 return 0;
             }
             else {
-                return index;
+                return i;
             }
         },
         getRandomValue: (array) => {
