@@ -10,6 +10,8 @@ Sippreep.Initializer().then(() => {
         console.error('Failed to create a Viewer: WebGL not supported.');
         return;
     }
+    //设置光影效果
+    viewer.setLightPreset(4);
     /**
      * 应用数据
      */
