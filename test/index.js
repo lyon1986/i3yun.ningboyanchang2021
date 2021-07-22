@@ -34,6 +34,8 @@ Sippreep.Initializer().then(() => {
         viewStates: [],
         //当前视角索引
         viewStateIndex: -1,
+        //分组依据
+        groupAttr:"类别"
     }
     //应用功能
     let funcs = {
@@ -75,6 +77,34 @@ Sippreep.Initializer().then(() => {
             }
             alert("选中事件清除成功");
         },
+        "定位聚焦对象组": async () => {
+            if (!viewer.model) {
+                alert("请先切换场景");
+                return;
+            }
+            /**
+             * 加载扩展(模型筛选器)
+             * @type Sippreep.Extensions.ModelFilter.ModelFilterExtension
+             */
+            let filter = await viewer.loadExtension("Sippreep.Extensions.ModelFilter.ModelFilterExtension");
+            /**
+             * 按类别分组对象
+             */
+            let values = await filter.listPropertyValueWithObjectId(funsData.groupAttr);
+            /**
+             * 随机获取一个分组
+             */
+            let randomValue = helperFuncs.getRandomValue([...values.keys()]);
+            let dbids = values.get(randomValue);
+
+            funsData.focusedDbids = dbids;
+            //隔离对象
+            viewer.isolate(funsData.focusedDbids);
+            //聚焦视角
+            viewer.fitToView(dbids);
+            //选中对象
+            //viewer.select(dbids);
+        },
         "定位聚焦对象": () => {
             if (!viewer.model) {
                 alert("请先切换场景");
@@ -86,7 +116,7 @@ Sippreep.Initializer().then(() => {
                 //随机获取一个对象
                 let dbids = [helperFuncs.getRandomValue(allDbids)];
 
-                funsData.focusedDbids.push(...dbids);
+                funsData.focusedDbids = dbids;
                 //隔离对象
                 viewer.isolate(funsData.focusedDbids);
                 //聚焦视角
