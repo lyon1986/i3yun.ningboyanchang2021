@@ -16,8 +16,8 @@ Sippreep.Initializer().then(() => {
      * 应用数据
      */
     let funsData = {
-        modelUrls: ['http://api.aisanwei.cn/api/Storge/Viewable?ID=jobs/525b8525-df81-4a65-9a97-f0197ac9c7c3/output/main.hf'//模型1
-            , 'http://api.aisanwei.cn/api/Storge/Viewable?ID=jobs/dc6803f8-6871-4adf-98b6-4a508f5aa6ba/output/main.hf'//模型2
+        modelUrls: ['https://www.aisanwei.cn/api/Storge/Viewable?ID=jobs/525b8525-df81-4a65-9a97-f0197ac9c7c3/output/main.hf'//模型1
+            , 'https://www.aisanwei.cn/api/Storge/Viewable?ID=jobs/dc6803f8-6871-4adf-98b6-4a508f5aa6ba/output/main.hf'//模型2
         ],
         //当前模型索引
         modelUrlIndex: -1,
