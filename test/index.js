@@ -77,7 +77,7 @@ Sippreep.Initializer().then(() => {
             }
             alert("选中事件清除成功");
         },
-        "定位聚焦对象组": async () => {
+        "定位聚焦对象组(图层)": async () => {
             if (!viewer.model) {
                 alert("请先切换场景");
                 return;
@@ -174,7 +174,8 @@ Sippreep.Initializer().then(() => {
         showGUI: () => {
             //GUI显示
             var allGui = new dat.GUI({
-                closeOnTop: true
+                closeOnTop: true,
+                width:320
             });
             allGui.domElement.parentNode.style.zIndex = '1';
             for (let name in funcs) {
